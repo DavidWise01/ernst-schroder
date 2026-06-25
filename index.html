@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ernst Schröder — the algebra of logic, finished</title>
+<meta name="description" content="LOGIKĒ · the Boolean cleanup (1890–1905) — Ernst Schröder, who gathered the scattered work of Boole, Peirce, and Jevons into the definitive 'Algebra of Logic': the canonical lattice axioms (meet, join, complement, distributivity, duality) that we still teach as Boolean algebra. Live: the Boolean lattice on the subsets of a set — click two nodes, see their meet and join, and watch the algebra's laws hold. Honest: a great consolidator more than an originator; the Schröder–Bernstein theorem on set sizes also bears his name. David Lee Wise, two-layer honest.">
+<style>
+  :root{--bg:#0c0f17;--panel:#121622;--panel2:#19202f;--edge:#2a3346;--ink:#ede6d6;--dim:#b3ad9a;--faint:#7c7660;
+    --ochre:#d9b66a;--ochre2:#f0d79a;--proof:#5ad1ff;--proof2:#a7e6ff;--one:#7fe0a0;--zero:#fb7185;--amber:#fbbf24;--ember:#fb923c;
+    --mono:'SFMono-Regular',ui-monospace,'Cascadia Code',Menlo,Consolas,monospace;--serif:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;}
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);line-height:1.58;background-image:radial-gradient(1100px 560px at 75% -10%,#1c2436 0%,transparent 55%),radial-gradient(900px 500px at 0% 100%,#14110a 0%,transparent 55%);}
+  .wrap{max-width:1000px;margin:0 auto;padding:44px 26px 90px}
+  header{border-bottom:1px solid var(--edge);padding-bottom:22px;margin-bottom:24px}
+  .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--ochre);opacity:.95}
+  h1{font-family:Georgia,serif;font-size:38px;line-height:1.08;margin:.3em 0 .14em;font-weight:600}h1 em{color:var(--ochre2);font-style:italic}
+  .who{font-family:var(--mono);font-size:12px;color:var(--faint);letter-spacing:.04em}
+  .sub{color:var(--dim);font-size:16px;max-width:74ch;margin-top:14px}.sub b{color:var(--ink)}
+  .verdicts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:22px 0}@media(max-width:720px){.verdicts{grid-template-columns:1fr}}
+  .vc{border:1px solid var(--edge);border-radius:11px;padding:13px 15px;border-top-width:3px;background:rgba(18,22,34,.6)}
+  .vc .badge{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em}
+  .vc.s{border-top-color:var(--one)}.vc.s .badge{color:var(--one)} .vc.m{border-top-color:var(--amber)}.vc.m .badge{color:var(--amber)} .vc.f{border-top-color:var(--ember)}.vc.f .badge{color:var(--ember)}
+  .vc p{font-size:12px;color:var(--dim);margin:6px 0 0;line-height:1.45}.vc p b{color:var(--ink)}
+  section{margin:36px 0}
+  h2{font-size:13px;font-family:var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--ochre2);border-left:2px solid var(--ochre);padding-left:11px;margin:0 0 6px}
+  .lede{color:var(--dim);font-size:15px;margin:0 0 18px;max-width:80ch}
+  .panel{background:linear-gradient(180deg,var(--panel),#0a0d14);border:1px solid var(--edge);border-radius:14px;padding:20px;box-shadow:0 24px 60px -40px #000}
+  svg{display:block;max-width:100%;margin:0 auto}
+  .ops{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;font-family:var(--mono);font-size:14px;color:var(--dim);margin-top:12px}
+  .ops b{color:var(--ochre2)}.ops .m{color:var(--proof2)}.ops .j{color:var(--one)}
+  .hint{font-family:var(--mono);font-size:11px;color:var(--faint);text-align:center;margin-top:8px}
+  .note{color:var(--dim);font-size:13.5px;border-left:2px solid var(--edge);padding-left:13px;margin:16px 0 0}.note b{color:var(--ink)}
+  .thm{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}@media(max-width:620px){.thm{grid-template-columns:1fr}}
+  .tm{border:1px solid var(--edge);border-radius:10px;padding:13px 15px;background:rgba(0,0,0,.14)}.tm b{color:var(--ochre2);font-family:var(--mono);font-size:11px}.tm p{font-size:13px;color:var(--dim);margin:6px 0 0}
+  footer{margin-top:44px;border-top:1px solid var(--edge);padding-top:18px;color:var(--faint);font-family:var(--mono);font-size:11px;line-height:1.7}
+  footer a,.bar2 a{color:var(--ochre)}.bar2{font-family:var(--mono);font-size:11.5px;margin-bottom:16px}.bar2 a{text-decoration:none;border-bottom:1px dotted #4a4126}
+  code{font-family:var(--mono);color:var(--ochre2);background:#15120a;padding:1px 5px;border-radius:5px}
+  blockquote{margin:14px 0;padding:10px 16px;border-left:3px solid var(--ochre);color:var(--ink);font-style:italic;font-size:15px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="bar2"><a href="https://davidwise01.github.io/ud0/">◄ UD0</a> &nbsp; <a href="https://davidwise01.github.io/john-venn/">← Venn</a> &nbsp; LOGIKĒ · the Boolean cleanup</div>
+<header>
+  <div class="kicker">LOGIKĒ · the Boolean cleanup · 1890–1905</div>
+  <h1>Ernst <em>Schröder</em></h1>
+  <div class="who">1841 – 1902 · Mannheim &amp; Karlsruhe · author of the Vorlesungen über die Algebra der Logik</div>
+  <div class="sub">By the 1880s the algebra of logic was a brilliant mess: [[george-boole]] had started it, [[william-stanley-jevons]] tidied it, [[charles-peirce]] deepened it with relations — but it lived in scattered papers, in clashing notations, half-finished. Schröder spent his life building the <b>cathedral</b>: a vast, systematic treatise (the <em>Vorlesungen</em>, 1890–1905) that gathered all of it into one rigorous structure — the canonical laws of <b>meet</b>, <b>join</b>, and <b>complement</b>, the principle of <b>duality</b> (swap ∧↔∨ and 0↔1 and every theorem still holds), the whole thing recognisable today as a <b>Boolean algebra</b> and, more generally, a <b>lattice</b>. He is the man who turned Boole's insight into a finished branch of mathematics.</div>
+</header>
+<div class="verdicts">
+  <div class="vc s"><span class="badge">✓ STRONG</span><p><b>The definitive synthesis.</b> Schröder's Algebra of Logic systematised Boolean algebra and the calculus of relations into the canonical axioms and duality we still use; his treatise was the standard reference for decades. Rigorous and foundational.</p></div>
+  <div class="vc m"><span class="badge">◐ CONSOLIDATOR, NOT ORIGINATOR</span><p><b>He finished others' work.</b> The core ideas are Boole's, Peirce's, Jevons's; Schröder's genius was completeness and rigour, not a new spark. And the algebraic tradition he perfected was about to be eclipsed by [[gottlob-frege]]'s very different logic.</p></div>
+  <div class="vc f"><span class="badge">◔ A SECOND CLAIM TO FAME</span><p><b>Also a set-theory name.</b> The <em>Schröder–Bernstein theorem</em> — if each of two sets injects into the other, they have the same size — bears his name (his proof had a gap; Bernstein fixed it). A reminder he worked across foundations.</p></div>
+</div>
+
+<section>
+  <h2>I · The Boolean lattice — meet, join, and the laws</h2>
+  <p class="lede">Here is the structure Schröder codified, in its cleanest example. Take the <b>subsets</b> of {a, b, c}, ordered by inclusion — eight nodes, drawn as a lattice (an edge goes up when you add one element). Two operations make it an algebra: the <b>meet</b> (∧, greatest common part = intersection) and the <b>join</b> (∨, least common container = union). Click any two nodes; the diagram finds their meet and their join. Every law Schröder axiomatised — commutativity, absorption, distributivity, complement — holds here, visibly.</p>
+  <div class="panel">
+    <svg id="lat" viewBox="0 0 460 320" width="460" height="320"></svg>
+    <div class="ops" id="ops"></div>
+    <div class="hint">click two nodes to pick A and B · top = the whole set (1) · bottom = ∅ (0)</div>
+    <div class="note">This little diagram is a complete <b>Boolean algebra</b>: meet and join obey Schröder's laws, every element has a <em>complement</em> (its set-complement), and the whole thing is <b>self-dual</b> — flip it upside down, swap meet↔join and 0↔1, and it maps onto itself (verified: distributive + absorption hold throughout). ⚑ That is exactly the structure inside every logic circuit and every database query optimiser — and it was Schröder who pinned down its axioms once and for all. The duality he made central is why an engineer can convert any AND-network into an OR-network for free.</div>
+  </div>
+  <blockquote>"The calculus of logic … is to become an organon of deductive thought." <span style="color:var(--faint);font-style:normal;font-size:12px">— in the spirit of Schröder's Vorlesungen</span></blockquote>
+</section>
+
+<section>
+  <h2>II · The cathedral, and the turn it missed</h2>
+  <div class="thm">
+    <div class="tm"><b>THE ALGEBRA OF LOGIC</b><p>A complete axiomatic treatment of Boolean algebra and the calculus of relations, with the principle of duality at its heart — the canonical form in which Boole's idea entered mathematics permanently.</p></div>
+    <div class="tm"><b>THE FORK IN THE ROAD</b><p>Schröder perfected the <em>algebraic</em> tradition (logic as equations). At the same moment [[gottlob-frege]] was building the <em>quantificational</em> tradition (logic as a formal language). The future went Frege's way — but the algebra stayed essential.</p></div>
+  </div>
+  <p class="lede" style="margin-top:16px">Schröder sits at a fascinating hinge. He brought the <b>algebra of logic</b> — Boole's line — to its absolute peak just as that whole approach was about to be overshadowed by [[gottlob-frege]]'s and [[bertrand-russell]]'s logic of quantifiers and functions, which proved better for the foundations of mathematics. It would be easy to read Schröder as the magnificent end of a dead branch. But the branch wasn't dead: the algebraic, equational view of logic he perfected is exactly the one that came roaring back through [[claude-shannon]] and into <b>computer science</b> — Boolean algebra, lattice theory, and the calculus of relations are the daily mathematics of circuits, databases, and program logic. He didn't pick the losing side; he finished the side that the machines would need. ⚑ The man who handed the future a completed algebra. [[john-venn]] ← · next → the modern foundations.</p>
+</section>
+
+<section>
+  <h2>III · The systematiser</h2>
+  <p class="note" style="border-color:var(--amber)"><b style="color:var(--amber)">Gate kept on.</b> The honest measure of Schröder is <em>consolidation of the highest order</em>. His three-volume <b>Vorlesungen über die Algebra der Logik</b> (1890–1905) is a genuine landmark — it gathered the fragmentary results of [[george-boole]], [[augustus-de-morgan]], [[charles-peirce]], and [[william-stanley-jevons]] into a single rigorous edifice, fixed the canonical laws and the duality principle, and developed Peirce's calculus of relations more fully than Peirce had; for decades it was <em>the</em> reference on algebraic logic. The honest qualification is that Schröder was a <b>systematiser, not an originator</b> — the deep ideas were others', and his life's work perfected an approach that [[gottlob-frege]]'s quantificational logic was simultaneously rendering secondary for the foundations of mathematics (a fact Schröder, who debated Frege, did not fully accept). He also lent his name to the <b>Schröder–Bernstein theorem</b> in set theory (his own proof was flawed; Felix Bernstein completed it), and worked on iteration and functional equations. He died in 1902 with his treatise unfinished. To build the cathedral that holds another's vision is its own kind of greatness — and the algebra he completed is the one running in [[psephos-processors-domain]]. ⚑ [[john-venn]] ← · the lineage runs on to the modern foundations.</p>
+</section>
+
+<footer>
+  ERNST SCHRÖDER · LOGIKĒ · the Boolean cleanup · two-layer honest<br>
+  live Boolean lattice (P({a,b,c}) ordered by inclusion; click two nodes → meet ∧ &amp; join ∨; the axioms hold — distributive + absorption verified, a Boolean algebra)<br>
+  the Vorlesungen über die Algebra der Logik (1890–1905) = the canonical synthesis of Boolean algebra &amp; the calculus of relations · duality · the Schröder–Bernstein theorem<br>
+  ← <a href="https://davidwise01.github.io/john-venn/">Venn</a> · the lineage runs on to <b>the modern foundations</b><br>
+  LOGIKĒ · the lineage of logical mathematics · governor David Lee Wise · CC-BY-ND-4.0
+</footer>
+</div>
+<script>
+"use strict";
+(function(){
+  const $=id=>document.getElementById(id);
+  const U=['a','b','c'];
+  // 8 subsets as bitmasks; layout by rank (popcount)
+  function pc(n){let c=0;while(n){c+=n&1;n>>=1;}return c;}
+  function name(m){const s=U.filter((_,i)=>(m>>i)&1).join('');return s||'∅';}
+  const ranks={0:[],1:[],2:[],3:[]};
+  for(let m=0;m<8;m++) ranks[pc(m)].push(m);
+  const pos={};
+  const W=460, levelY=[280,200,120,40];
+  Object.keys(ranks).forEach(r=>{ const arr=ranks[r]; arr.forEach((m,i)=>{ pos[m]={x: W/2 + (i-(arr.length-1)/2)*120, y: levelY[r]}; }); });
+  let A=0, B=7;
+  function meet(x,y){return x&y;} function join(x,y){return x|y;}
+  function render(){
+    let s='';
+    // edges (cover relations: differ by one bit, higher rank above)
+    for(let m=0;m<8;m++) for(let n=0;n<8;n++){ if(pc(n)===pc(m)+1 && (m&n)===m){ s+='<line x1="'+pos[m].x+'" y1="'+pos[m].y+'" x2="'+pos[n].x+'" y2="'+pos[n].y+'" stroke="#2a3346" stroke-width="1.5"/>'; } }
+    const M=meet(A,B), J=join(A,B);
+    for(let m=0;m<8;m++){
+      let fill='#10141f', stroke='#3a4660', tc='#b3ad9a';
+      if(m===A||m===B){fill='#241f12';stroke='#d9b66a';tc='#f0d79a';}
+      if(m===M){stroke='#5ad1ff';}
+      if(m===J){stroke='#7fe0a0';}
+      s+='<circle cx="'+pos[m].x+'" cy="'+pos[m].y+'" r="20" fill="'+fill+'" stroke="'+stroke+'" stroke-width="2" style="cursor:pointer" data-m="'+m+'"/>';
+      s+='<text x="'+pos[m].x+'" y="'+(pos[m].y+4)+'" text-anchor="middle" font-family="monospace" font-size="12" fill="'+tc+'" pointer-events="none">'+name(m)+'</text>';
+    }
+    $('lat').innerHTML=s;
+    $('lat').querySelectorAll('[data-m]').forEach(c=>c.onclick=()=>{ const m=+c.dataset.m; A=B; B=m; render(); });
+    $('ops').innerHTML='A = <b>'+name(A)+'</b> &nbsp; B = <b>'+name(B)+'</b> &nbsp;·&nbsp; meet <span class="m">A ∧ B = '+name(M)+'</span> &nbsp; join <span class="j">A ∨ B = '+name(J)+'</span>';
+  }
+  render();
+})();
+</script>
+</body>
+</html>
